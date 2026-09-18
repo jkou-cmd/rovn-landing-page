@@ -6,6 +6,7 @@ import Paragraph from "@/components/Typography/Paragraph.astro";
 import wordmark from "@/assets/logo/rovn-wordmark-large.svg";
 import band from "@/assets/images/brand-band.png";
 import { SITE_NAME } from "@/consts.ts";
+import { withBase } from "@/utils/paths.ts";
 
 interface Props {
   /** Set to `false` to skip rendering this component and its children. */
@@ -69,7 +70,7 @@ const columns = [
                 <ul class="footer_links">
                   {column.links.map((link) => (
                     <li>
-                      <a class="footer_link" href={link.href}>
+                      <a class="footer_link" href={withBase(link.href)}>
                         {link.label}
                       </a>
                     </li>

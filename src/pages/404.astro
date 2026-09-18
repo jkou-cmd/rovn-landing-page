@@ -6,6 +6,7 @@ import Paragraph from "@/components/Typography/Paragraph.astro";
 import ButtonWrapper from "@/components/Wrapper/ButtonWrapper.astro";
 import Button from "@/components/Button.astro";
 import ContentWrapper from "@/components/Wrapper/ContentWrapper.astro";
+import { withBase } from "@/utils/paths.ts";
 ---
 
 <Layout
@@ -23,7 +24,7 @@ import ContentWrapper from "@/components/Wrapper/ContentWrapper.astro";
         you here might be out of date.</Paragraph
       >
       <ButtonWrapper>
-        <Button element="link" href="/">Back to home</Button>
+        <Button element="link" href={withBase("/")}>Back to home</Button>
       </ButtonWrapper>
     </ContentWrapper>
   </Section>

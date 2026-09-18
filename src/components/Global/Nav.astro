@@ -5,6 +5,7 @@ import ButtonWrapper from "@/components/Wrapper/ButtonWrapper.astro";
 import mark from "@/assets/logo/rovn-mark.svg";
 import wordmark from "@/assets/logo/rovn-wordmark.svg";
 import { SITE_NAME } from "@/consts.ts";
+import { withBase } from "@/utils/paths.ts";
 
 interface Props {
   /** Set to `false` to skip rendering this component and its children. */
@@ -30,7 +31,7 @@ const { render = true, overlap = false } = Astro.props;
         <span />
       </div>
       <div class="nav_inner">
-        <a class="nav_logo" href="/" aria-label={SITE_NAME}>
+        <a class="nav_logo" href={withBase("/")} aria-label={SITE_NAME}>
           <Icon class="nav_mark" src={mark} variant="full-width" />
           <Icon class="nav_wordmark" src={wordmark} variant="full-width" />
         </a>
