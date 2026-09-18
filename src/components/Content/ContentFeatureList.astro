@@ -1,0 +1,60 @@
+---
+import Heading from "@/components/Typography/Heading.astro";
+import Paragraph from "@/components/Typography/Paragraph.astro";
+
+type HeadingTag = "h2" | "h3" | "h4" | "h5" | "h6";
+
+interface Props {
+  /** Set to `false` to skip rendering this component and its children. */
+  render?: boolean;
+  /** Each entry is one titled paragraph, ruled off from the one before it. */
+  items: { title: string; text: string }[];
+  /** Heading level, for the page outline. Every title is the same size. */
+  headingTag?: HeadingTag;
+}
+
+const { render = true, items = [], headingTag = "h3" } = Astro.props;
+---
+
+{
+  render && items.length > 0 && (
+    <div class="feature-list_wrap">
+      {items.map((item) => (
+        <div class="feature-list_item">
+          <Heading tag={headingTag} variant="h5">
+            <Fragment set:html={item.title} />
+          </Heading>
+          <Paragraph maxWidth={41}>
+            <Fragment set:html={item.text} />
+          </Paragraph>
+        </div>
+      ))}
+    </div>
+  )
+}
+
+<style is:global>
+  @layer components {
+    .feature-list_wrap {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-4);
+    }
+
+    .feature-list_item {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-4);
+
+      & > * {
+        margin-block: 0;
+      }
+
+      &:not(:last-child) {
+        padding-bottom: var(--space-4);
+        border-bottom: var(--border-width) solid var(--border);
+      }
+    }
+  }
+</style>

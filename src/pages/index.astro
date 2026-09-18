@@ -1,41 +1,171 @@
 ---
 import Layout from "@/layouts/BaseLayout.astro";
 import Section from "@/components/Wrapper/Section.astro";
-import Heading from "@/components/Typography/Heading.astro";
-import Eyebrow from "@/components/Typography/Eyebrow.astro";
-import Img from "@/components/Media/Img.astro";
-import lumos_background from "@/assets/graphics/lumos-background.svg";
-import Icon from "@/components/Media/Icon.astro";
-import logo_icon from "@/assets/logo/logo-icon.svg";
 import ContentWrapper from "@/components/Wrapper/ContentWrapper.astro";
+import Grid from "@/components/Wrapper/Grid.astro";
+import Heading from "@/components/Typography/Heading.astro";
+import Paragraph from "@/components/Typography/Paragraph.astro";
+import Button from "@/components/Button.astro";
+import ButtonWrapper from "@/components/Wrapper/ButtonWrapper.astro";
+import Img from "@/components/Media/Img.astro";
+import ContentHeroVisual from "@/components/Content/ContentHeroVisual.astro";
+import ContentFeatureList from "@/components/Content/ContentFeatureList.astro";
+import ContentFeatureCard from "@/components/Content/ContentFeatureCard.astro";
+import ContentFeatureSplit from "@/components/Content/ContentFeatureSplit.astro";
+import ContentAudienceCard from "@/components/Content/ContentAudienceCard.astro";
+import ContentStats from "@/components/Content/ContentStats.astro";
+import ContentCtaMain from "@/components/Content/ContentCtaMain.astro";
+import assistant from "@/assets/images/assistant.jpg";
+import outreach from "@/assets/images/outreach.png";
+import inSync from "@/assets/images/in-sync.jpg";
+import access from "@/assets/images/access.jpg";
+import history from "@/assets/images/history.jpg";
+import clinicians from "@/assets/images/clinicians.jpg";
+import facilities from "@/assets/images/facilities.png";
+
+const capabilities = [
+  {
+    title: "Handle your day-to-day.",
+    text: "Give Rōvn a task. It works through the steps, coordinates what’s needed, and comes back to you when you have a decision to make.",
+  },
+  {
+    title: "Works while you sleep.",
+    text: "Rōvn follows up, checks for updates, and keeps tasks moving in the background. Come back to progress, with a clear view of what needs you.",
+  },
+  {
+    title: "Finds anything.",
+    text: "Ask for a document, a conversation, or that detail you half remember. Rōvn finds it across the information you’ve connected.",
+  },
+];
+
+const stats = [
+  {
+    number: "512",
+    label: "Clinicians",
+    text: "Ready for less work around their work.",
+  },
+  {
+    number: "12,345",
+    label: "Tasks completed",
+    text: "Follow-ups, checks, and next steps handled by Rōvn.",
+  },
+];
 ---
 
-<Layout theme="dark">
-  <Section
-    paddingBottom="even"
-    containerClass="flex-grow"
-    paddingTop="even"
-    class="flex-grow"
-    style="min-height: calc(100svh - var(--nav-height));"
-  >
-    <ContentWrapper
-      class="flex-grow theme-brand"
-      variant="card"
-      mediaOpacity={100}
-    >
-      <Icon src={logo_icon} variant="large" />
-      <Heading variant="display" tag="h1" class="margin-block-8"
-        >Style Guide</Heading
-      >
-      <Eyebrow variant="tag">v0.0.3</Eyebrow>
-      <Img
-        slot="column2"
-        src={lumos_background}
-        width={1920}
-        height={1080}
-        loading="eager"
-        fetchPriority="high"
-      />
+<Layout
+  title="An end-to-end AI assistant for healthcare"
+  description="Tell Rōvn what you need. It finds a way forward, coordinates with the right people, and gets to work."
+>
+  <!-- hero -->
+  <Section>
+    <ContentWrapper centered>
+      <Heading tag="h1" variant="h2" class="heading-accent">
+        Your end-to-end assistant
+        <br />
+        <strong>for your healthcare career.</strong>
+      </Heading>
+      <Paragraph maxWidth={44}>
+        Find your next job. Staff your team. Rōvn handles the applications,
+        credentials, follow-ups, and coordination. Tell it what you need. It
+        takes it from there.
+      </Paragraph>
+      <ButtonWrapper>
+        <Button element="link" href="#waitlist">Join waitlist</Button>
+        <Button element="link" href="#demo" emphasis="secondary">
+          Book a demo
+        </Button>
+      </ButtonWrapper>
     </ContentWrapper>
+    <ContentHeroVisual />
+  </Section>
+
+  <!-- what it does -->
+  <Section>
+    <ContentWrapper
+      variant="sticky-content"
+      column1Class="align-self-stretch justify-content-between"
+    >
+      <Heading tag="h2" variant="h3" class="heading-accent">
+        Tell it what you need.
+        <br />
+        <strong>Let it work for you.</strong>
+      </Heading>
+      <ContentFeatureList items={capabilities} />
+      <Img slot="column2" src={assistant} />
+    </ContentWrapper>
+  </Section>
+
+  <!-- coordination -->
+  <Section>
+    <Grid medium={2}>
+      <div></div>
+      <Heading tag="h2" variant="h3" class="heading-accent margin-top-0">
+        Less back-and-forth.
+        <br />
+        <strong>On both sides.</strong>
+      </Heading>
+    </Grid>
+    <Grid medium={2}>
+      <ContentFeatureCard
+        title="Talk to practices for you."
+        text="Rōvn reaches out, asks questions, and follows up on your behalf, within the permissions you set."
+        image={outreach}
+      />
+      <ContentFeatureCard
+        title="Keeps both sides in sync."
+        text="Your agent and the facility’s agent coordinate requirements and next steps, sharing only what you permit."
+        image={inSync}
+      />
+    </Grid>
+  </Section>
+
+  <!-- boundaries -->
+  <Section>
+    <Heading tag="h2" variant="h3" class="heading-accent">
+      <strong>You set the boundaries.</strong>
+      <br />
+      Rōvn works within them.
+    </Heading>
+    <Grid>
+      <ContentFeatureSplit
+        title="Choose what it sees and has access to."
+        text="Decide which records and conversations Rōvn can use, and what it can share with others."
+        image={access}
+      />
+      <ContentFeatureSplit
+        title="See everything your agent has done."
+        text="Open any task, document, or conversation to see its full history—every action, change, and exchange, down to the individual logs."
+        image={history}
+      />
+    </Grid>
+  </Section>
+
+  <!-- who it is for -->
+  <Section>
+    <Heading tag="h2" variant="h3" maxWidth={28}>
+      Start with what&rsquo;s on your plate.
+    </Heading>
+    <Grid class="gap-3" medium={2}>
+      <ContentAudienceCard
+        label="For clinicians"
+        title="Take your next career step."
+        image={clinicians}
+      />
+      <ContentAudienceCard
+        label="For facilities and practices"
+        title="Get hires ready to start."
+        image={facilities}
+      />
+    </Grid>
+  </Section>
+
+  <!-- proof -->
+  <Section>
+    <ContentStats items={stats} />
+  </Section>
+
+  <!-- call to action -->
+  <Section>
+    <ContentCtaMain />
   </Section>
 </Layout>

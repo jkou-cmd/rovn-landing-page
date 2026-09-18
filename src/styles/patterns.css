@@ -8,8 +8,17 @@
   max-width: var(--_mw, none);
 }
 
+.text:not(.text-style-display, [class*="text-style-h"]) {
+  color: var(--text-2);
+}
+
 .heading + .text {
   margin-top: 0;
+}
+
+.eyebrow_wrap + .heading,
+.eyebrow_wrap + .text {
+  margin-top: var(--space-3);
 }
 
 .section {
@@ -41,7 +50,7 @@
 }
 
 .button-wrapper {
-  margin-top: var(--space-6);
+  margin-top: var(--space-5);
   display: flex;
   flex-flow: wrap;
   align-items: center;
@@ -163,7 +172,7 @@
 
 .heading-accent strong {
   color: var(--heading-accent);
-  font-weight: inherit;
+  font-weight: var(--heading-accent-weight);
 }
 
 .display-contents {

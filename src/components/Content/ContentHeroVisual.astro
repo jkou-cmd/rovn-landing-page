@@ -1,0 +1,64 @@
+---
+import Img from "@/components/Media/Img.astro";
+import backdrop from "@/assets/images/hero-backdrop.png";
+import app from "@/assets/images/hero-app.png";
+
+interface Props {
+  /** Set to `false` to skip rendering this component and its children. */
+  render?: boolean;
+}
+
+const { render = true } = Astro.props;
+---
+
+{
+  render && (
+    <div class="hero-visual_wrap">
+      <Img
+        class="hero-visual_backdrop"
+        src={backdrop}
+        loading="eager"
+        fetchPriority="high"
+      />
+      <Img
+        class="hero-visual_app"
+        src={app}
+        alt="The Rōvn app working through a task"
+        transparent
+        loading="eager"
+      />
+    </div>
+  )
+}
+
+<style is:global>
+  @layer components {
+    .hero-visual_wrap {
+      container-type: inline-size;
+      position: relative;
+      display: flex;
+      align-items: start;
+      justify-content: center;
+      width: 100%;
+      min-height: 0;
+      aspect-ratio: 1344 / 619;
+      border-radius: var(--radius-main);
+      overflow: clip;
+    }
+
+    .hero-visual_backdrop {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+    }
+
+    .hero-visual_app {
+      position: relative;
+      width: 22cqw;
+      height: auto;
+      margin-top: 3cqw;
+      flex: none;
+    }
+  }
+</style>

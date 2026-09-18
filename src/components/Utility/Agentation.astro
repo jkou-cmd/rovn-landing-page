@@ -1,0 +1,32 @@
+---
+interface Props {
+  /** Set to `false` to skip rendering this component and its children. */
+  render?: boolean;
+  /**
+   * URL search parameter that turns the feedback toolbar on, as in
+   * `/?agentation`. Without it nothing is mounted and none of the toolbar's
+   * code is downloaded.
+   */
+  flag?: string;
+}
+
+const { render = true, flag = "agentation" } = Astro.props;
+---
+
+{render && <div id="agentation-root" data-flag={flag} />}
+
+<script>
+  const root = document.getElementById("agentation-root");
+  const flag = root?.dataset.flag ?? "agentation";
+
+  if (root && new URLSearchParams(window.location.search).has(flag)) {
+    const [{ createElement }, { createRoot }, { Agentation }] =
+      await Promise.all([
+        import("react"),
+        import("react-dom/client"),
+        import("agentation"),
+      ]);
+
+    createRoot(root).render(createElement(Agentation));
+  }
+</script>

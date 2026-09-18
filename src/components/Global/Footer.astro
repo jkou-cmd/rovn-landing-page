@@ -1,6 +1,10 @@
 ---
 import Icon from "@/components/Media/Icon.astro";
-import logo from "@/assets/logo/logo.svg";
+import Img from "@/components/Media/Img.astro";
+import Heading from "@/components/Typography/Heading.astro";
+import Paragraph from "@/components/Typography/Paragraph.astro";
+import wordmark from "@/assets/logo/rovn-wordmark-large.svg";
+import band from "@/assets/images/brand-band.png";
 import { SITE_NAME } from "@/consts.ts";
 
 interface Props {
@@ -9,36 +13,81 @@ interface Props {
 }
 
 const { render = true } = Astro.props;
+
+const columns = [
+  {
+    title: "Company",
+    links: [
+      { label: "Home", href: "/" },
+      { label: "Book a demo", href: "#demo" },
+      { label: "Get in touch", href: "#contact" },
+    ],
+  },
+  {
+    title: "Legal",
+    links: [
+      { label: "Privacy policy", href: "/privacy" },
+      { label: "Terms of service", href: "/terms" },
+      { label: "Security", href: "/security" },
+    ],
+  },
+  {
+    title: "Connect",
+    links: [
+      { label: "X", href: "https://x.com" },
+      { label: "LinkedIn", href: "https://linkedin.com" },
+      { label: "Email", href: "#contact" },
+    ],
+  },
+];
 ---
 
 {
   render && (
     <footer class="footer_wrap">
-      <div class="footer_inner">
-        <div class="footer_top">
-          <a class="footer_logo" href="/" aria-label={SITE_NAME}>
-            <Icon src={logo} variant="full-width" />
-          </a>
-          <nav aria-label="Footer">
-            <ul class="footer_links">
-              <li>
-                <a class="footer_link" href="/">
-                  Home
-                </a>
-              </li>
-              <li>
-                <a class="footer_link" href="/example-components">
-                  Example Components
-                </a>
-              </li>
-            </ul>
+      <div class="footer_main">
+        <div class="footer_inner">
+          <div class="footer_brand">
+            <Paragraph class="footer_tagline" variant="h5">
+              An end-to-end AI assistant
+              <br />
+              for healthcare.
+            </Paragraph>
+            <Paragraph class="footer_copyright" variant="small">
+              &copy; <span id="year">2026</span> {SITE_NAME}. All rights
+              reserved.
+            </Paragraph>
+          </div>
+          <nav class="footer_columns" aria-label="Footer">
+            {columns.map((column) => (
+              <div class="footer_column">
+                <div class="footer_column_head">
+                  <Heading tag="h2" variant="h6">
+                    {column.title}
+                  </Heading>
+                </div>
+                <ul class="footer_links">
+                  {column.links.map((link) => (
+                    <li>
+                      <a class="footer_link" href={link.href}>
+                        {link.label}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
           </nav>
         </div>
-        <div class="footer_bottom">
-          <p class="footer_copyright text-style-small">
-            &copy; <span id="year">{new Date().getFullYear()}</span>&#160;
-            {SITE_NAME}
-          </p>
+      </div>
+      <div class="footer_band">
+        <Img class="footer_band_visual" src={band} />
+        <div class="footer_band_inner">
+          <Icon
+            class="footer_band_wordmark"
+            src={wordmark}
+            variant="full-width"
+          />
         </div>
       </div>
     </footer>
@@ -57,54 +106,80 @@ const { render = true } = Astro.props;
   @layer components {
     .footer_wrap {
       display: flex;
+      flex-direction: column;
+      background-color: var(--background);
+      color: var(--text);
+    }
+
+    .footer_main {
+      display: flex;
       justify-content: center;
       padding-block: var(--section-space-small);
       padding-inline: var(--site-margin);
-      background-color: var(--background);
-      color: var(--text);
-      border-top: var(--border-width) solid var(--border);
     }
 
     .footer_inner {
       width: 100%;
       max-width: var(--max-width-main);
       display: flex;
-      flex-direction: column;
-      gap: var(--space-6);
+      flex-wrap: wrap;
+      align-items: start;
+      gap: var(--space-8) var(--site-gutter);
     }
 
-    .footer_top {
+    .footer_brand,
+    .footer_columns {
+      flex: 1 1 20rem;
+    }
+
+    .footer_brand {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-5);
+
+      & > * {
+        margin-block: 0;
+      }
+    }
+
+    .footer_columns {
       display: flex;
       flex-wrap: wrap;
-      align-items: center;
-      justify-content: space-between;
-      gap: var(--space-4) var(--space-6);
+      gap: var(--space-4);
     }
 
-    .footer_logo {
-      display: block;
-      width: 7.5rem;
-      max-width: 100%;
-      transition: opacity var(--hover-duration) var(--hover-ease);
-      @media (hover: hover) {
-        &:hover {
-          opacity: 0.6;
-        }
+    .footer_column {
+      flex: 1 1 8rem;
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-4);
+    }
+
+    .footer_column_head {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-1);
+      padding-bottom: var(--space-1);
+      border-bottom: var(--border-width) solid var(--border);
+
+      & > * {
+        margin-block: 0;
       }
     }
 
     .footer_links {
+      list-style: none;
+      margin: 0;
+      padding: 0;
       display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      gap: var(--space-4);
-      font-size: var(--text-small);
-      font-weight: var(--primary-medium);
+      flex-direction: column;
+      gap: var(--space-1);
     }
 
     .footer_link {
+      font-size: var(--text-small);
+      line-height: var(--text-small-line-height);
       color: var(--text-2);
-      text-decoration: none;
       transition: color var(--hover-duration) var(--hover-ease);
       @media (hover: hover) {
         &:hover {
@@ -113,13 +188,46 @@ const { render = true } = Astro.props;
       }
     }
 
-    .footer_bottom {
-      padding-top: var(--space-4);
-      border-top: var(--border-width) solid var(--border);
+    .footer_band {
+      position: relative;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      overflow: clip;
+      color: var(--background);
+
+      &::after {
+        content: "";
+        position: absolute;
+        inset-inline: 0;
+        bottom: 0;
+        height: 103%;
+        background-image: linear-gradient(
+          in oklab 180deg,
+          transparent 57%,
+          var(--brand-500) 100%
+        );
+      }
     }
 
-    .footer_copyright {
-      color: var(--text-2);
+    /* Holds the wordmark to the page's own width, and the space above it. */
+    .footer_band_inner {
+      position: relative;
+      width: var(--site-width);
+      max-width: var(--max-width-main);
+      container-type: inline-size;
+    }
+
+    .footer_band_visual {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+    }
+
+    .footer_band .icon.footer_band_wordmark {
+      width: 100%;
+      margin-top: 20.5cqw;
     }
   }
 </style>

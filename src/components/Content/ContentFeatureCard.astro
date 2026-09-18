@@ -1,0 +1,74 @@
+---
+import Heading from "@/components/Typography/Heading.astro";
+import Paragraph from "@/components/Typography/Paragraph.astro";
+import Img from "@/components/Media/Img.astro";
+
+type HeadingTag = "h2" | "h3" | "h4" | "h5" | "h6";
+
+interface Props {
+  /** The card's title. Inline markup is rendered. */
+  title: string;
+  /** Body copy under the title. Inline markup is rendered. */
+  text: string;
+  /** An imported asset, a remote `http(s)` URL, or a path to a file in `public/`. */
+  image: ImageMetadata | string;
+  /** Set to `false` to skip rendering this component and its children. */
+  render?: boolean;
+  /** Leave unset on decorative images — renders `alt=""`. */
+  imageAlt?: string;
+  /** Heading level, for the page outline. Every title is the same size. */
+  headingTag?: HeadingTag;
+}
+
+const {
+  render = true,
+  title,
+  text,
+  image,
+  imageAlt,
+  headingTag = "h3",
+} = Astro.props;
+---
+
+{
+  render && (title || image) && (
+    <div class="feature-card_wrap">
+      <Img class="feature-card_visual" src={image} alt={imageAlt} />
+      <div class="feature-card_content">
+        <Heading tag={headingTag} variant="h5">
+          <Fragment set:html={title} />
+        </Heading>
+        <Paragraph maxWidth={41}>
+          <Fragment set:html={text} />
+        </Paragraph>
+      </div>
+    </div>
+  )
+}
+
+<style is:global>
+  @layer components {
+    .feature-card_wrap {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-5);
+    }
+
+    .feature-card_visual {
+      width: 100%;
+      aspect-ratio: 656 / 355;
+      border-radius: var(--radius-main);
+    }
+
+    .feature-card_content {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-4);
+
+      & > * {
+        margin-block: 0;
+      }
+    }
+  }
+</style>

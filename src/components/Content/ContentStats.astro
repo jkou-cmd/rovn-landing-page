@@ -1,0 +1,75 @@
+---
+import Heading from "@/components/Typography/Heading.astro";
+import Paragraph from "@/components/Typography/Paragraph.astro";
+
+type HeadingTag = "h2" | "h3" | "h4" | "h5" | "h6";
+
+interface Props {
+  /** Set to `false` to skip rendering this component and its children. */
+  render?: boolean;
+  /** Each entry is one figure, with the thing it counts and a line about it. */
+  items: { number: string; label: string; text: string }[];
+  /** Heading level, for the page outline. Every label is the same size. */
+  headingTag?: HeadingTag;
+}
+
+const { render = true, items = [], headingTag = "h3" } = Astro.props;
+---
+
+{
+  render && items.length > 0 && (
+    <div class="stats_wrap">
+      {items.map((item) => (
+        <div class="stats_item">
+          <Paragraph class="stats_number" variant="display">
+            <Fragment set:html={item.number} />
+          </Paragraph>
+          <div class="stats_body">
+            <Heading tag={headingTag} variant="h5">
+              <Fragment set:html={item.label} />
+            </Heading>
+            <Paragraph variant="small">
+              <Fragment set:html={item.text} />
+            </Paragraph>
+          </div>
+        </div>
+      ))}
+    </div>
+  )
+}
+
+<style is:global>
+  @layer components {
+    .stats_wrap {
+      width: 100%;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: var(--space-7);
+    }
+
+    .stats_item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: var(--space-6);
+
+      & > * {
+        margin-block: 0;
+      }
+    }
+
+    .stats_body {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: var(--space-3);
+      max-width: 13rem;
+
+      & > * {
+        margin-block: 0;
+      }
+    }
+  }
+</style>

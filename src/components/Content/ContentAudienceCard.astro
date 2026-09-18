@@ -1,0 +1,74 @@
+---
+import Heading from "@/components/Typography/Heading.astro";
+import Paragraph from "@/components/Typography/Paragraph.astro";
+import Img from "@/components/Media/Img.astro";
+
+type HeadingTag = "h2" | "h3" | "h4" | "h5" | "h6";
+
+interface Props {
+  /** Who the block is for, sat above the title. */
+  label: string;
+  /** The block's title. Inline markup is rendered. */
+  title: string;
+  /** An imported asset, a remote `http(s)` URL, or a path to a file in `public/`. */
+  image: ImageMetadata | string;
+  /** Set to `false` to skip rendering this component and its children. */
+  render?: boolean;
+  /** Leave unset on decorative images — renders `alt=""`. */
+  imageAlt?: string;
+  /** Heading level, for the page outline. Every title is the same size. */
+  headingTag?: HeadingTag;
+}
+
+const {
+  render = true,
+  label,
+  title,
+  image,
+  imageAlt,
+  headingTag = "h3",
+} = Astro.props;
+---
+
+{
+  render && (title || image) && (
+    <div class="audience_wrap">
+      <div class="audience_content">
+        <Paragraph class="audience_label">
+          <Fragment set:html={label} />
+        </Paragraph>
+        <Heading tag={headingTag} variant="h5">
+          <Fragment set:html={title} />
+        </Heading>
+      </div>
+      <Img class="audience_visual" src={image} alt={imageAlt} />
+    </div>
+  )
+}
+
+<style is:global>
+  @layer components {
+    .audience_wrap {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-5);
+    }
+
+    .audience_content {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-4);
+
+      & > * {
+        margin-block: 0;
+      }
+    }
+
+    .audience_visual {
+      width: 100%;
+      aspect-ratio: 664 / 500;
+      border-radius: var(--radius-main);
+    }
+  }
+</style>
